@@ -3,10 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --bg: #fff;
-  --color: #000;
-  --color-muted: #ccc;
-  --accent: red;
+  /* dark  */
+  --bg: rgb(36, 37, 41);
+  --bg-90: rgba(36, 37, 41, 0.9);
+  --bg-muted: rgb(95, 104, 114);
+  --gray: rgb(177, 173, 196);
+  --gray-purple: rgb(202, 202, 229);
+  --black: rgb(26, 26, 11);
+  --black-muted: rgb(54, 53, 56);
+  --white: rgb(253, 242, 226);
+  --white-muted: rgb(196, 190, 186);
+  --accent: rgb(255, 241, 133);
 }
 
 * {
@@ -21,8 +28,8 @@ body {
   line-height: 24px;
   font-weight: 400;
 
-  color: var(--color);
-  background-color: var(--bg);
+  color: var(--white-muted);
+  background-color: var(--bg-muted);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
