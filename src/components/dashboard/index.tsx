@@ -1,6 +1,11 @@
 import Menu from "./menu";
 
 import { AiOutlineSearch } from "react-icons/ai";
+import Card from "./card";
+import TaskCard from "./card/TaskCard";
+import FinanceCard from "./card/FinanceCard";
+import ProjectCard from "./card/ProjectCard";
+import CalendarCard from "./card/CalendarCard";
 
 interface DashboardProps {}
 
@@ -10,7 +15,7 @@ const Dashboard = ({}: DashboardProps) => {
       <Menu />
 
       {/* MAIN */}
-      <div className="flex flex-col gap-4 w-full px-8">
+      <div className="flex flex-col gap-6 w-full px-8">
         {/* HEADER */}
         <div className="flex justify-between items-center">
           {/* TITLE */}
@@ -27,10 +32,11 @@ const Dashboard = ({}: DashboardProps) => {
         </div>
 
         {/* BODY */}
-        <div className="h-full">
-          <p>flex grid, two rows three cols</p>
-          {/* <Card row={1} col={1} rowSpan={1} colSpan={1} /> */}
-          {/* <Card row={1} col={2} rowSpan={2} colSpan={1} /> */}
+        <div className="h-full grid grid-rows-2 grid-cols-3 gap-8">
+          <TaskCard />
+          <ProjectCard />
+          <FinanceCard />
+          <CalendarCard />
         </div>
       </div>
     </div>
