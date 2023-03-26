@@ -9,7 +9,7 @@ interface CardProps {
 const Card = ({ styles, children, onClick }: CardProps) => {
   return (
     <div
-      className={`border border-white/30 rounded-md h-full w-full ${styles} ${
+      className={`rounded-xl overflow-hidden h-full w-full ${styles} ${
         onClick && "cursor-pointer"
       }`}
       onClick={onClick ?? undefined}
