@@ -1,4 +1,4 @@
-import Card from ".";
+import Card from "../dashboard/card";
 
 interface CalendarCardProps {}
 
@@ -6,7 +6,7 @@ const CalendarCard = ({}: CalendarCardProps) => {
   return (
     <Card>
       <div>
-        <p>Calendars</p>
+        <p>Calendar card</p>
       </div>
     </Card>
   );

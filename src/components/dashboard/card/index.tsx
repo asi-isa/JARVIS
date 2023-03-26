@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 interface CardProps {
-  styles?: string;
+  styles?: React.HTMLAttributes<HTMLDivElement>["className"];
   children: ReactNode;
 }
 

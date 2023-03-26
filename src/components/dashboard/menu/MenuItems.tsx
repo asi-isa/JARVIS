@@ -1,7 +1,7 @@
 import LogoBtn from "../../LogoBtn";
 import { MdDashboard } from "react-icons/md";
 import { RiOrganizationChart } from "react-icons/ri";
-import { FaTasks, FaRegCalendarAlt } from "react-icons/fa";
+import { FaTasks, FaRegCalendarAlt, FaChartPie } from "react-icons/fa";
 import { GoSettings } from "react-icons/go";
 
 interface MenuItemsProps {}
@@ -32,6 +32,12 @@ const MenuItems = ({}: MenuItemsProps) => {
         title="Calendar"
         isActive={false}
         onClick={() => console.log("show Calendar")}
+      />
+      <LogoBtn
+        Logo={<FaChartPie />}
+        title="Finances"
+        isActive={false}
+        onClick={() => console.log("show finances")}
       />
       <LogoBtn
         Logo={<GoSettings />}
