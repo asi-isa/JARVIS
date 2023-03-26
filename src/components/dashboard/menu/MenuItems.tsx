@@ -1,49 +1,54 @@
-import LogoBtn from "../../LogoBtn";
 import { MdDashboard } from "react-icons/md";
 import { RiOrganizationChart } from "react-icons/ri";
 import { FaTasks, FaRegCalendarAlt, FaChartPie } from "react-icons/fa";
 import { GoSettings } from "react-icons/go";
 
+import { useDashboardCtx } from "../../../ctx/DashboardCtx";
+
+import LogoBtn from "../../LogoBtn";
+
 interface MenuItemsProps {}
 
 const MenuItems = ({}: MenuItemsProps) => {
+  const { selectedDashboard, setSelectedDashboard } = useDashboardCtx();
+
   return (
     <div className="flex flex-col gap-3">
       <LogoBtn
         Logo={<MdDashboard />}
         title="Dashboard"
-        isActive={true}
-        onClick={() => console.log("show dashboard")}
+        isActive={selectedDashboard === "dashboard"}
+        onClick={() => setSelectedDashboard("dashboard")}
       />
       <LogoBtn
         Logo={<RiOrganizationChart />}
         title="Projects"
-        isActive={false}
-        onClick={() => console.log("show projects")}
+        isActive={selectedDashboard === "projects"}
+        onClick={() => setSelectedDashboard("projects")}
       />
       <LogoBtn
         Logo={<FaTasks />}
         title="Tasks"
-        isActive={false}
-        onClick={() => console.log("show tasks")}
+        isActive={selectedDashboard === "tasks"}
+        onClick={() => setSelectedDashboard("tasks")}
       />
       <LogoBtn
         Logo={<FaRegCalendarAlt />}
         title="Calendar"
-        isActive={false}
-        onClick={() => console.log("show Calendar")}
+        isActive={selectedDashboard === "calendar"}
+        onClick={() => setSelectedDashboard("calendar")}
       />
       <LogoBtn
         Logo={<FaChartPie />}
         title="Finances"
-        isActive={false}
-        onClick={() => console.log("show finances")}
+        isActive={selectedDashboard === "finances"}
+        onClick={() => setSelectedDashboard("finances")}
       />
       <LogoBtn
         Logo={<GoSettings />}
         title="Settings"
-        isActive={false}
-        onClick={() => console.log("show settings")}
+        isActive={selectedDashboard === "settings"}
+        onClick={() => setSelectedDashboard("settings")}
       />
     </div>
   );

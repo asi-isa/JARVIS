@@ -4,11 +4,13 @@ import CalendarCard from "../calendar/CalendarCard";
 import ProjectCard from "../projects/ProjectCard";
 import TaskCard from "../tasks/TaskCard";
 
-interface DashboardProps {}
+interface DashboardBodyProps {
+  isVisible: boolean;
+}
 
-const Dashboard = ({}: DashboardProps) => {
+const DashboardBody = ({ isVisible }: DashboardBodyProps) => {
   return (
-    <Body title="Dashboard">
+    <Body title="DashboardBody" isVisible={isVisible}>
       <div className="h-full grid grid-rows-2 grid-cols-3 gap-8">
         <TaskCard />
         <ProjectCard />
@@ -19,4 +21,4 @@ const Dashboard = ({}: DashboardProps) => {
   );
 };
 
-export default Dashboard;
+export default DashboardBody;
