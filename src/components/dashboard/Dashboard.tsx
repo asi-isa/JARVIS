@@ -12,7 +12,7 @@ const Dashboard = ({}: DashboardProps) => {
       <div className="h-full grid grid-rows-2 grid-cols-3 gap-8">
         <TaskCard />
         <ProjectCard />
-        <IncomeExpenseCard />
+        <IncomeExpenseCard onClick={() => console.log("show finances")} />
         <CalendarCard />
       </div>
     </Body>

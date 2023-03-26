@@ -1,10 +1,12 @@
 import Card from "../dashboard/card";
 
-interface IncomeExpenseCardProps {}
+interface IncomeExpenseCardProps {
+  onClick?: () => void;
+}
 
-const IncomeExpenseCard = ({}: IncomeExpenseCardProps) => {
+const IncomeExpenseCard = ({ onClick }: IncomeExpenseCardProps) => {
   return (
-    <Card>
+    <Card onClick={onClick ?? undefined}>
       <div>
         <p>IncomeExpenseCard</p>
       </div>
