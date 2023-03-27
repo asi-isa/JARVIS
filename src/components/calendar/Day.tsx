@@ -1,20 +1,17 @@
 import { getWeek, isWeekend } from "date-fns";
+import { format } from "../../lib/date";
+
+import { leadingZero } from "../../lib/num";
 
 interface DayProps {
   date: Date;
 }
 
-function leadingZero(num: number) {
-  return num < 10 ? `0${num}` : `${num}`;
-}
-
 const Day = ({ date }: DayProps) => {
   const day = leadingZero(date.getDate());
-  const dayName = new Intl.DateTimeFormat("en-US", {
+  const dayName = format(date, {
     weekday: "short",
-  })
-    .format(date)
-    .slice(0, 2);
+  }).slice(0, 2);
 
   const isWE = isWeekend(date);
   const isStartOfWeek = date.getDay() === 1;

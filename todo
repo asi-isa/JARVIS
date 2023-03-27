@@ -10,3 +10,25 @@ dashboard
   calendar
   expenses vs income
   
+finance Dashboard
+  doppelte buchführung
+    soll an haben
+    anfangsbestände
+    automatische berechnung, aktualisierung der bilanz, guv?
+
+  finance calendar
+  chart like moneyo
+  balance
+  read csv
+  recurring finances, overview, 
+    order by date or amount
+  add finance
+    design, https://www.frontendmentor.io/challenges/invoice-app-i7KaLTQjl
+
+
+projects
+  project notes as markdown
+
+color theme
+  light theme
+  switch color theme by setting css variables

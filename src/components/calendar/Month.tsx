@@ -1,5 +1,5 @@
 import { eachDayOfInterval, lastDayOfMonth } from "date-fns";
-import { MonthName, monthToNumber, YEAR } from ".";
+import { MonthName, monthToNumber, YEAR } from "../../lib/date";
 import Day from "./Day";
 
 interface MonthProps {

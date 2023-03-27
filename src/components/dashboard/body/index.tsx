@@ -41,8 +41,7 @@ const Body = ({ title, children, isVisible }: BodyProps) => {
             </p>
           </div>
 
-          {/* BODY */}
-          {children}
+          <div className="overflow-y-scroll scrollbar-hide">{children}</div>
         </motion.div>
       )}
     </AnimatePresence>

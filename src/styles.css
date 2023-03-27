@@ -4,9 +4,9 @@
 
 :root {
   /* dark  */
-  --bg: rgb(36, 37, 41);
+  --bg: rgb(20, 22, 36);
   --bg-90: rgba(36, 37, 41, 0.9);
-  --bg-muted: rgb(95, 104, 114);
+  --bg-muted: rgb(30, 33, 56);
   --gray: rgb(177, 173, 196);
   --gray-purple: rgb(202, 202, 229);
   --black: rgb(26, 26, 11);
@@ -14,6 +14,8 @@
   --white: rgb(253, 242, 226);
   --white-muted: rgb(196, 190, 186);
   --accent: rgb(255, 241, 133);
+  --red: red;
+  --green: green;
 }
 
 * {
@@ -37,4 +39,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   overflow-x: hidden;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
