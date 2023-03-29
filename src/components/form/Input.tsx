@@ -8,6 +8,7 @@ interface InputProps {
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
+// TODO InputScaffold => title, gap, ...
 const Input = ({ id, title, type, value, onChange }: InputProps) => {
   return (
     <div className="flex flex-col gap-1">

@@ -10,6 +10,7 @@ interface AutocompleteDropdownProps {
   onChange: (item: ItemType) => void;
 }
 
+// TODO extend 'clickable area'
 const AutocompleteDropdown = ({
   list,
   onChange,

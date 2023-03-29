@@ -8,6 +8,7 @@ import CategoryInput from "../form/CategoryInput";
 import DateInput from "../form/DateInput";
 import Input from "../form/Input";
 import Modal from "../modal";
+import ToggleInput from "../form/ToggleInput";
 
 interface AddFinanceFormProps {
   show: boolean;
@@ -19,6 +20,7 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
     name: "",
     category: "",
     date: new Date(),
+    isRecurrent: false,
     amount: 0,
     creditor: "",
     debitor: "",
@@ -70,6 +72,19 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
               onChange={(item) => updateFinance("category", item.value)}
             />
           </div>
+
+          <ToggleInput
+            title="Is It Recurrent"
+            isOn={finance.isRecurrent}
+            onChange={(isOn) => updateFinance("isRecurrent", isOn)}
+          />
+
+          {finance.isRecurrent && (
+            <div className="flex gap-6">
+              {/* RecurrintUntil, TODO DateInput more generic */}
+              {/* RecurrenceCycle */}
+            </div>
+          )}
         </div>
       </div>
     </Modal>
