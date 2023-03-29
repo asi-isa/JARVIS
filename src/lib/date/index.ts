@@ -1,3 +1,4 @@
+import { isEqual as dfIsEqual, startOfDay } from "date-fns";
 import { leadingZero } from "../num";
 
 export function extractDayMonthYear(date: Date) {
@@ -44,4 +45,12 @@ export type MonthName = typeof MONTHS[number];
 
 export function monthToNumber(month: MonthName) {
   return MONTHS.indexOf(month);
+}
+
+export function monthNumberToName(monthNumber: number) {
+  return MONTHS[monthNumber];
+}
+
+export function isEqual(date1: Date, date2: Date) {
+  return dfIsEqual(startOfDay(date1), startOfDay(date2));
 }
