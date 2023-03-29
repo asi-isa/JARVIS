@@ -1,12 +1,12 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { IoClose } from "react-icons/io5";
-import Transaction from "../../accounting/Transaction";
-import { dateToStr } from "../../lib/date";
+
 import { generateID } from "../../lib/util";
-import DatePicker from "../calendar/DatePicker";
+
+import Transaction from "../../accounting/Transaction";
+import CategoryInput from "../form/CategoryInput";
 import DateInput from "../form/DateInput";
 import Input from "../form/Input";
-
 import Modal from "../modal";
 
 interface AddFinanceFormProps {
@@ -63,10 +63,12 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
             onChange={(e) => updateFinance("name", e.target.value)}
           />
 
-          <div className="flex gap-3">
+          <div className="flex gap-6">
             <DateInput />
 
-            {/* CATEGORY */}
+            <CategoryInput
+              onChange={(item) => updateFinance("category", item.value)}
+            />
           </div>
         </div>
       </div>

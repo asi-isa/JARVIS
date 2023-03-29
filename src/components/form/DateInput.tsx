@@ -8,6 +8,7 @@ interface DateInputProps {}
 
 const DateInput = ({}: DateInputProps) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  // TODO backdrop::onClick::hide date picker
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const { day, month, year } = extractDayMonthYear(selectedDate);
@@ -16,7 +17,7 @@ const DateInput = ({}: DateInputProps) => {
     <div className="flex flex-col gap-1">
       <p className="font-medium">When</p>
       <p
-        className="text-[var(--orange)] text-lg font-medium bg-[var(--bg-muted)] py-[10px] px-[16px] rounded-lg border border-[var(--black-muted)] hover:border-[var(--white-muted)] focus:border-[var(--white-muted)] active:border-[var(--white-muted)] w-fit cursor-pointer"
+        className="text-[var(--orange)] text-lg font-medium bg-[var(--bg-muted)] py-[8px] px-[16px] rounded-lg border border-[var(--black-muted)] hover:border-[var(--white-muted)] focus:border-[var(--white-muted)] active:border-[var(--white-muted)] w-fit cursor-pointer"
         onClick={() => setShowDatePicker(!showDatePicker)}
       >
         {leadingZero(day)}
