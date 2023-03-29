@@ -9,11 +9,21 @@ import DateInput from "../form/DateInput";
 import Input from "../form/Input";
 import Modal from "../modal";
 import ToggleInput from "../form/ToggleInput";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 
 interface AddFinanceFormProps {
   show: boolean;
   onClose: () => void;
 }
+
+const recurrentConVariants: Variants = {
+  initial: { opacity: 0, height: 0 },
+  animate: {
+    opacity: 1,
+    height: "fit-content",
+  },
+  exit: { opacity: 0, height: 0 },
+};
 
 const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
   const [finance, setFinance] = useState<Transaction>({
@@ -21,6 +31,7 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
     category: "",
     date: new Date(),
     isRecurrent: false,
+    recurrentUntil: undefined,
     amount: 0,
     creditor: "",
     debitor: "",
@@ -56,7 +67,7 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
           <IoClose className="cursor-pointer text-2xl" onClick={onClose} />
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-5">
           <Input
             id="what"
             title="Description"
@@ -66,7 +77,10 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
           />
 
           <div className="flex gap-6">
-            <DateInput />
+            <DateInput
+              title="When"
+              onChange={(date) => updateFinance("date", date)}
+            />
 
             <CategoryInput
               onChange={(item) => updateFinance("category", item.value)}
@@ -79,12 +93,25 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
             onChange={(isOn) => updateFinance("isRecurrent", isOn)}
           />
 
-          {finance.isRecurrent && (
-            <div className="flex gap-6">
-              {/* RecurrintUntil, TODO DateInput more generic */}
-              {/* RecurrenceCycle */}
-            </div>
-          )}
+          <div className="overflow-hidden">
+            <AnimatePresence>
+              {finance.isRecurrent && (
+                <motion.div
+                  variants={recurrentConVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  className="flex gap-6"
+                >
+                  <DateInput
+                    title="Recurrent Until"
+                    onChange={(date) => updateFinance("recurrentUntil", date)}
+                  />
+                  {/* RecurrenceCycle */}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </Modal>

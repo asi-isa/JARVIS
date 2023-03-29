@@ -1,21 +1,29 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { extractDayMonthYear } from "../../lib/date";
 import { leadingZero } from "../../lib/num";
 import DatePicker from "../calendar/DatePicker";
 
-interface DateInputProps {}
+interface DateInputProps {
+  title: string;
+  onChange: (date: Date) => void;
+}
 
-const DateInput = ({}: DateInputProps) => {
+// TODO restrict selectable dates
+const DateInput = ({ title, onChange }: DateInputProps) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   // TODO backdrop::onClick::hide date picker
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  useEffect(() => {
+    onChange(selectedDate);
+  }, [selectedDate]);
 
   const { day, month, year } = extractDayMonthYear(selectedDate);
 
   return (
     <div className="flex flex-col gap-1">
-      <p className="font-medium">When</p>
+      <p className="font-medium">{title}</p>
       <p
         className="text-[var(--orange)] text-lg font-medium bg-[var(--bg-muted)] py-[8px] px-[16px] rounded-lg border border-[var(--black-muted)] hover:border-[var(--white-muted)] focus:border-[var(--white-muted)] active:border-[var(--white-muted)] w-fit cursor-pointer"
         onClick={() => setShowDatePicker(!showDatePicker)}

@@ -25,6 +25,7 @@ export default class BalanceSheet {
     return this;
   }
 
+  // TODO to retrun this or not to return? ;)
   debitToCredit(transaction: Transaction): BalanceSheet {
     this.transactions.push(transaction);
 
