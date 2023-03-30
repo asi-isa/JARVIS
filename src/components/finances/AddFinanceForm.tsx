@@ -110,7 +110,10 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
                     onChange={(date) => updateFinance("recurrentUntil", date)}
                   />
 
-                  <CylcleInput />
+                  <CylcleInput
+                    value={finance.recurringCycle}
+                    onChange={(cycle) => updateFinance("recurringCycle", cycle)}
+                  />
                 </motion.div>
               )}
             </AnimatePresence>

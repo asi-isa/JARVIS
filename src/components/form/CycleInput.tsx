@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { toWords } from "number-to-words";
 
@@ -7,7 +7,10 @@ import { Cycle } from "../../accounting/types";
 import AutocompleteDropdown from "./AutocompleteDropdown";
 import Input from "./Input";
 
-interface CylcleInputProps {}
+interface CylcleInputProps {
+  value: Cycle | undefined;
+  onChange: (cycle: Cycle) => void;
+}
 
 type PredefinesCycle = {
   name: string;
@@ -28,18 +31,20 @@ const predefinedCycles: PredefinesCycle[] = [
   { name: "Daily", cycle: { cycle: "days", every: 1 } },
 ];
 
-// TODO onChange, value
 // TODO design
-const CylcleInput = ({}: CylcleInputProps) => {
-  const [cycle, setCycle] = useState<Cycle | undefined>(undefined);
+const CylcleInput = ({ value, onChange }: CylcleInputProps) => {
+  const [cycle, setCycle] = useState<Cycle | undefined>(value);
 
   const [customCycle, setCustomCycle] = useState<Cycle>({
     cycle: "months",
     every: 6,
   });
 
-  console.log("cycle", cycle);
-  console.log("customCycle", customCycle);
+  useEffect(() => {
+    if (cycle) {
+      onChange(cycle);
+    }
+  }, [cycle]);
 
   function cycleToStr(cycle_: Cycle) {
     const { cycle, every } = cycle_;
