@@ -11,6 +11,7 @@ import Modal from "../modal";
 import ToggleInput from "../form/ToggleInput";
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import CylcleInput from "../form/CycleInput";
+import DebitToCreditInput from "../form/DebitToCreditInput";
 
 interface AddFinanceFormProps {
   show: boolean;
@@ -69,7 +70,7 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
           <IoClose className="cursor-pointer text-2xl" onClick={onClose} />
         </div>
 
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-8">
           <Input
             id="what"
             title="Description"
@@ -95,6 +96,7 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
             onChange={(isOn) => updateFinance("isRecurrent", isOn)}
           />
 
+          {/* wrapped inside a div to avoid springy layout animation caused by the gap property */}
           <div className="">
             <AnimatePresence>
               {finance.isRecurrent && (
@@ -118,6 +120,19 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
               )}
             </AnimatePresence>
           </div>
+
+          <DebitToCreditInput
+            value={{
+              debitor: finance.debitor,
+              creditor: finance.creditor,
+              amount: finance.amount,
+            }}
+            onChange={(value) => {
+              updateFinance("debitor", value.debitor);
+              updateFinance("creditor", value.creditor);
+              updateFinance("amount", value.amount);
+            }}
+          />
         </div>
       </div>
     </Modal>
