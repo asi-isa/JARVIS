@@ -8,14 +8,18 @@ export type ItemType = { id: number; name: string; value: string };
 interface AutocompleteDropdownProps {
   list: ItemType[];
   onChange: (item: ItemType) => void;
+  value?: ItemType;
+  className?: string;
 }
 
 // TODO extend 'clickable area'
 const AutocompleteDropdown = ({
   list,
   onChange,
+  value,
+  className,
 }: AutocompleteDropdownProps) => {
-  const [selected, setSelected] = useState(list[0]);
+  const [selected, setSelected] = useState(value ?? list[0]);
   const [query, setQuery] = useState("");
 
   useEffect(() => {
@@ -34,13 +38,13 @@ const AutocompleteDropdown = ({
 
   return (
     <Combobox value={selected} onChange={setSelected}>
-      <div className="relative">
+      <div className="relative ">
         <div
           className="relative w-full cursor-default overflow-hidden text-left shadow-md flex justify-between bg-[var(--bg-muted)] py-2 px-3 text-[var(--white)] font-medium text-lg rounded-lg border border-[var(--black-muted)] hover:border-[var(--white-muted)] focus:border-[var(--white-muted)] active:border-[var(--white-muted)]
         "
         >
           <Combobox.Input
-            className="bg-inherit outline-none"
+            className={`bg-inherit outline-none ${className}`}
             displayValue={(item: ItemType) => item.name}
             onChange={(event) => setQuery(event.target.value)}
           />
@@ -57,7 +61,7 @@ const AutocompleteDropdown = ({
         >
           <Combobox.Options className="absolute flex flex-col gap-2 mt-1 max-h-60 w-full overflow-auto rounded-md bg-[var(--bg-muted)]  text-base shadow-lg focus:outline-none">
             {filteredList.length === 0 && query !== "" ? (
-              <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
+              <div className="relative cursor-default select-none py-2 px-4 text-[var(--white-muted)]">
                 Nothing found.
               </div>
             ) : (
@@ -85,7 +89,7 @@ const AutocompleteDropdown = ({
                           aria-hidden="true"
                         />
                         <p
-                          className={`block truncate ${
+                          className={` truncate ${
                             isSelected ? "font-medium" : "font-normal"
                           }`}
                         >

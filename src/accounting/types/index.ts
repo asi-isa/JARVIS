@@ -1,5 +1,7 @@
-// TODO
-// move to  type file
+export type Cycle = {
+  cycle: keyof Duration;
+  every: number;
+};
 
 export default interface Transaction {
   id: string;
@@ -7,6 +9,7 @@ export default interface Transaction {
   date: Date;
   isRecurrent: boolean;
   recurrentUntil: Date | undefined;
+  recurringCycle: Cycle | undefined;
   creditor: string;
   debitor: string;
   name: string;

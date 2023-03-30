@@ -1,6 +1,6 @@
 import { generateID } from "../lib/util";
 import Account, { AccountType } from "./Account";
-import Transaction from "./Transaction";
+import Transaction from "./types";
 
 export default class BalanceSheet {
   private accounts: Map<string, Account> = new Map();

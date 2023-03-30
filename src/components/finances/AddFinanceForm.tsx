@@ -3,13 +3,14 @@ import { IoClose } from "react-icons/io5";
 
 import { generateID } from "../../lib/util";
 
-import Transaction from "../../accounting/Transaction";
+import Transaction from "../../accounting/types";
 import CategoryInput from "../form/CategoryInput";
 import DateInput from "../form/DateInput";
 import Input from "../form/Input";
 import Modal from "../modal";
 import ToggleInput from "../form/ToggleInput";
 import { AnimatePresence, motion, Variants } from "framer-motion";
+import CylcleInput from "../form/CycleInput";
 
 interface AddFinanceFormProps {
   show: boolean;
@@ -32,6 +33,7 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
     date: new Date(),
     isRecurrent: false,
     recurrentUntil: undefined,
+    recurringCycle: undefined,
     amount: 0,
     creditor: "",
     debitor: "",
@@ -61,7 +63,7 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
 
   return (
     <Modal show={show} onClose={onClose}>
-      <div className="flex flex-col gap-8 bg-[var(--bg)] p-4 rounded-lg shadow-2xl ">
+      <div className="flex flex-col gap-8 bg-[var(--bg)] p-4 rounded-lg shadow-2xl relative">
         <div className="flex items-center justify-between text-[var(--white)]">
           <p className="text-2xl font-medium">Add New Finance</p>
           <IoClose className="cursor-pointer text-2xl" onClick={onClose} />
@@ -93,7 +95,7 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
             onChange={(isOn) => updateFinance("isRecurrent", isOn)}
           />
 
-          <div className="overflow-hidden">
+          <div className="">
             <AnimatePresence>
               {finance.isRecurrent && (
                 <motion.div
@@ -107,7 +109,8 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
                     title="Recurrent Until"
                     onChange={(date) => updateFinance("recurrentUntil", date)}
                   />
-                  {/* RecurrenceCycle */}
+
+                  <CylcleInput />
                 </motion.div>
               )}
             </AnimatePresence>

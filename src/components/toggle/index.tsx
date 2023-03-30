@@ -25,10 +25,7 @@ const Toggle = ({
   IsOnIcon,
 }: ToggleProps) => {
   return (
-    <div
-      onClick={() => onChange(!isOn)}
-      className="flex gap-2 items-center mt-auto cursor-pointer"
-    >
+    <div className="flex gap-2 items-center mt-auto">
       <p
         className={`text-sm ${
           isOn ? "text-[var(--white)]" : "text-[var(--white-muted)]"
@@ -37,7 +34,8 @@ const Toggle = ({
         {isOnTitle}
       </p>
       <div
-        className={`flex items-center gap-3 border border-[var(--white-muted)] px-[2px] py-[4px] rounded-3xl relative ${
+        onClick={() => onChange(!isOn)}
+        className={`flex items-center gap-3 border border-[var(--white-muted)] px-[2px] py-[4px] rounded-3xl relative cursor-pointer ${
           isOn ? "justify-start" : "justify-end"
         }`}
       >

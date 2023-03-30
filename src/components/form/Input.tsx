@@ -5,13 +5,23 @@ interface InputProps {
   title: string;
   type: HTMLInputTypeAttribute;
   value: string;
+  className?: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
+  min?: React.InputHTMLAttributes<HTMLInputElement>["min"];
 }
 
 // TODO InputScaffold => title, gap, ...
-const Input = ({ id, title, type, value, onChange }: InputProps) => {
+const Input = ({
+  id,
+  title,
+  type,
+  value,
+  className,
+  onChange,
+  min,
+}: InputProps) => {
   return (
-    <div className="flex flex-col gap-1">
+    <div className={`flex flex-col gap-1 ${className}`}>
       <label className="capitalize font-medium" htmlFor={id}>
         {title}
       </label>
@@ -22,6 +32,7 @@ const Input = ({ id, title, type, value, onChange }: InputProps) => {
         name={id}
         value={value}
         onChange={onChange}
+        min={min}
       />
     </div>
   );
