@@ -10,6 +10,7 @@ interface AutocompleteDropdownProps {
   onChange: (item: ItemType) => void;
   value?: ItemType;
   className?: string;
+  showChevron?: boolean;
 }
 
 // TODO extend 'clickable area'
@@ -18,6 +19,7 @@ const AutocompleteDropdown = ({
   onChange,
   value,
   className,
+  showChevron = true,
 }: AutocompleteDropdownProps) => {
   const [selected, setSelected] = useState(value ?? list[0]);
   const [query, setQuery] = useState("");
@@ -49,7 +51,7 @@ const AutocompleteDropdown = ({
             onChange={(event) => setQuery(event.target.value)}
           />
           <Combobox.Button>
-            <FaChevronDown />
+            <FaChevronDown className={`${!showChevron && "invisible"}`} />
           </Combobox.Button>
         </div>
         <Transition

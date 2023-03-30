@@ -10,7 +10,7 @@ interface ToggleInputProps {
 
 const ToggleInput = ({ title, isOn, onChange }: ToggleInputProps) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-3">
       <p className="font-medium">{title}</p>
 
       <Toggle

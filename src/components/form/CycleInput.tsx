@@ -82,7 +82,7 @@ const CylcleInput = ({ value, onChange }: CylcleInputProps) => {
         {({ open }) => (
           <>
             <Popover.Button
-              className={`bg-[var(--bg-muted)] py-2 px-3 text-[var(--white)] font-medium text-lg rounded-lg border border-[var(--black-muted)] hover:border-[var(--white-muted)] focus:border-[var(--white-muted)] active:border-[var(--white-muted)] w-full text-left`}
+              className={`bg-[var(--bg-muted)] py-2 px-3 text-[var(--white)] font-medium text-lg rounded-lg border border-[var(--black-muted)] hover:border-[var(--white-muted)] focus:border-[var(--white-muted)] active:border-[var(--white-muted)] w-[268px] text-left`}
             >
               {cycle ? cycleToStr(cycle) : "Choose a Cycle"}
             </Popover.Button>

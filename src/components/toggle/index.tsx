@@ -28,7 +28,7 @@ const Toggle = ({
     <div className="flex gap-2 items-center mt-auto">
       <p
         className={`text-sm ${
-          isOn ? "text-[var(--white)]" : "text-[var(--white-muted)]"
+          isOn ? "text-[var(--white)]" : "text-[var(--white-muted)] opacity-60"
         }`}
       >
         {isOnTitle}
@@ -49,7 +49,7 @@ const Toggle = ({
       </div>
       <p
         className={`text-sm ${
-          !isOn ? "text-[var(--white)]" : "text-[var(--white-muted)]"
+          !isOn ? "text-[var(--white)]" : "text-[var(--white-muted)] opacity-60"
         }`}
       >
         {isOffTitle}

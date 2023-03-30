@@ -53,6 +53,11 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
   //   });
   // }
 
+  function onSave() {
+    // TODO check if form is filled properly
+    // => add to balance
+  }
+
   function updateFinance<K extends keyof Transaction>(
     key: K,
     value: Transaction[K]
@@ -64,7 +69,7 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
 
   return (
     <Modal show={show} onClose={onClose}>
-      <div className="flex flex-col gap-8 bg-[var(--bg)] p-4 rounded-lg shadow-2xl relative">
+      <div className="flex flex-col gap-8 bg-[var(--bg)] p-5 rounded-lg shadow-2xl relative border border-[var(--black-muted)]">
         <div className="flex items-center justify-between text-[var(--white)]">
           <p className="text-2xl font-medium">Add New Finance</p>
           <IoClose className="cursor-pointer text-2xl" onClick={onClose} />
@@ -133,6 +138,22 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
               updateFinance("amount", value.amount);
             }}
           />
+
+          <div className="flex gap-3 self-end mt-4">
+            <p
+              className="bg-[var(--bg-muted)] text-[var(--white)] text-lg font-medium px-4 py-2 rounded-lg border border-[var(--black-muted)] cursor-pointer"
+              onClick={onClose}
+            >
+              Cancel
+            </p>
+
+            <p
+              className="bg-[var(--accent)] text-[var(--bg)] text-lg font-medium  px-4 py-2 rounded-lg border border-[var(--black-muted)] cursor-pointer"
+              onClick={onSave}
+            >
+              Save
+            </p>
+          </div>
         </div>
       </div>
     </Modal>

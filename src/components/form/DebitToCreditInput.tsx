@@ -21,12 +21,13 @@ const DebitToCreditInput = ({ value, onChange }: DebitToCreditInputProps) => {
   ];
 
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-6">
       <div className="flex flex-col gap-1">
         <p className="font-medium">Debitor</p>
 
         <AutocompleteDropdown
           list={accounts}
+          showChevron={false}
           value={accounts.filter((a) => a.value === value.debitor)[0]}
           onChange={(item) => {
             onChange({ ...value, debitor: item.value });
@@ -39,6 +40,7 @@ const DebitToCreditInput = ({ value, onChange }: DebitToCreditInputProps) => {
 
         <AutocompleteDropdown
           list={accounts}
+          showChevron={false}
           value={accounts.filter((a) => a.value === value.creditor)[0]}
           onChange={(item) => {
             onChange({ ...value, creditor: item.value });
