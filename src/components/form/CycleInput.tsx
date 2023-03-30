@@ -62,7 +62,7 @@ const CylcleInput = ({ value, onChange }: CylcleInputProps) => {
   function onCustomCycle() {
     let every = isNaN(customCycle.every) ? 1 : customCycle.every;
 
-    // for the case 'every' was nan
+    // for the case 'every' was NaN
     setCustomCycle({
       cycle: customCycle.cycle,
       every,
