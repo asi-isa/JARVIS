@@ -9,6 +9,7 @@ interface InputProps {
   onChange: ChangeEventHandler<HTMLInputElement>;
   min?: React.InputHTMLAttributes<HTMLInputElement>["min"];
   hideNumberInputArrows?: boolean;
+  autofocus?: boolean;
 }
 
 // TODO InputScaffold => title, gap, ...
@@ -21,6 +22,7 @@ const Input = ({
   onChange,
   min,
   hideNumberInputArrows = false,
+  autofocus = false,
 }: InputProps) => {
   return (
     <div className={`flex flex-col gap-1 ${className}`}>
@@ -37,6 +39,7 @@ const Input = ({
         value={value}
         onChange={onChange}
         min={min}
+        autoFocus={autofocus}
       />
     </div>
   );

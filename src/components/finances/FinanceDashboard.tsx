@@ -11,7 +11,7 @@ interface FinanceDashboardProps {
 }
 
 const FinanceDashboard = ({ isVisible }: FinanceDashboardProps) => {
-  const [showAddFinanceForm, setShowAddFinanceForm] = useState(true);
+  const [showAddFinanceForm, setShowAddFinanceForm] = useState(false);
 
   return (
     <DashboardBody title="Finances" isVisible={isVisible}>

@@ -10,8 +10,7 @@ const FinanceList = ({}: FinanceListProps) => {
 
   return (
     <div className="flex flex-col gap-3">
-      // TODO balanceSheet.getTransactions()
-      {balanceSheet.transactions.map((tranaction, i) => {
+      {balanceSheet.getTransactions().map((tranaction, i) => {
         const { category, date, name, amount } = tranaction;
         return (
           <FinanceListItem

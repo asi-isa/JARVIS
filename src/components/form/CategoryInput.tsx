@@ -6,6 +6,8 @@ interface CategoryInputProps {
 
 const CategoryInput = ({ onChange }: CategoryInputProps) => {
   // TODO get from balanceSheet
+  // TODO infer value from debitor, creditor
+
   const CATEGORIES = [
     { id: 0, name: "Select a category", value: "" },
     { id: 1, name: "Groceries", value: "grocery" },

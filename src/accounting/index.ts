@@ -4,11 +4,7 @@ import Transaction from "./types";
 
 export default class BalanceSheet {
   private accounts: Map<string, Account> = new Map();
-  // quick fix
-  // i get an 'getTransaction is not a function' error
-  // when invoking the getter method after setting/
-  // updating a new balance ???
-  transactions: Transaction[] = [];
+  private transactions: Transaction[] = [];
 
   constructor(accounts?: Map<string, Account>, transactions?: Transaction[]) {
     if (accounts && transactions) {
@@ -22,11 +18,9 @@ export default class BalanceSheet {
 
   addAccount(name: string, type: AccountType) {
     this.accounts.set(name, new Account(name, type));
-    return this;
   }
 
-  // TODO to retrun this or not to return? ;)
-  debitToCredit(transaction: Transaction): BalanceSheet {
+  debitToCredit(transaction: Transaction) {
     this.transactions.push(transaction);
 
     const { debitor, creditor, amount } = transaction;
@@ -41,7 +35,7 @@ export default class BalanceSheet {
 
     // loss account as debitor => equity reduction
     if (debitorAccount?.getType() === "loss") {
-      return this.debitToCredit({
+      this.debitToCredit({
         ...transaction,
         id: generateID(),
         debitor: "equity",
@@ -51,15 +45,13 @@ export default class BalanceSheet {
 
     // profit account as creditor => equity increase
     if (creditorAccount?.getType() === "profit") {
-      return this.debitToCredit({
+      this.debitToCredit({
         ...transaction,
         id: generateID(),
         debitor: creditorAccount.getName(),
         creditor: "equity",
       });
     }
-
-    return this;
   }
 
   getTransactions(): Transaction[] {
@@ -68,6 +60,16 @@ export default class BalanceSheet {
 
   copy(): BalanceSheet {
     return new BalanceSheet(this.accounts, this.transactions);
+  }
+
+  getAccountNames() {
+    const accountNames: string[] = [];
+
+    this.accounts.forEach((account) => {
+      accountNames.push(account.getName());
+    });
+
+    return accountNames;
   }
 
   private initBalanceSheet() {

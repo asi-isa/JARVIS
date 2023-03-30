@@ -1,4 +1,6 @@
 import { ChangeEvent, useState } from "react";
+import { useFinanceCtx } from "../../ctx/FinanceCtx";
+import { capitalize } from "../../lib/str";
 import AutocompleteDropdown, { ItemType } from "./AutocompleteDropdown";
 import Input from "./Input";
 
@@ -14,10 +16,20 @@ interface DebitToCreditInputProps {
 }
 
 const DebitToCreditInput = ({ value, onChange }: DebitToCreditInputProps) => {
+  const { balanceSheet } = useFinanceCtx();
   // TODO get from balance
-  const accounts = [
-    { id: 0, name: "Bank", value: "bank" },
-    { id: 1, name: "Grocery", value: "grocery" },
+  const accounts = balanceSheet.getAccountNames().map((accountName, i) => {
+    return {
+      id: i + 1,
+      name: capitalize(accountName),
+      value: accountName,
+    };
+  });
+
+  const ACCOUNTS = [
+    { id: 0, name: "Select an Account", value: "" },
+
+    ...accounts,
   ];
 
   return (
@@ -26,9 +38,9 @@ const DebitToCreditInput = ({ value, onChange }: DebitToCreditInputProps) => {
         <p className="font-medium">Debitor</p>
 
         <AutocompleteDropdown
-          list={accounts}
+          list={ACCOUNTS}
           showChevron={false}
-          value={accounts.filter((a) => a.value === value.debitor)[0]}
+          value={ACCOUNTS.filter((a) => a.value === value.debitor)[0]}
           onChange={(item) => {
             onChange({ ...value, debitor: item.value });
           }}
@@ -39,9 +51,9 @@ const DebitToCreditInput = ({ value, onChange }: DebitToCreditInputProps) => {
         <p className="font-medium">Creditor</p>
 
         <AutocompleteDropdown
-          list={accounts}
+          list={ACCOUNTS}
           showChevron={false}
-          value={accounts.filter((a) => a.value === value.creditor)[0]}
+          value={ACCOUNTS.filter((a) => a.value === value.creditor)[0]}
           onChange={(item) => {
             onChange({ ...value, creditor: item.value });
           }}

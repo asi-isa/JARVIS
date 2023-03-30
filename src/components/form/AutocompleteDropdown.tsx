@@ -61,7 +61,7 @@ const AutocompleteDropdown = ({
           leaveTo="opacity-0"
           afterLeave={() => setQuery("")}
         >
-          <Combobox.Options className="absolute flex flex-col gap-2 mt-1 max-h-60 w-full overflow-auto rounded-md bg-[var(--bg-muted)]  text-base shadow-lg focus:outline-none">
+          <Combobox.Options className="absolute z-30 flex flex-col gap-2 mt-1 max-h-60 w-full overflow-auto rounded-md bg-[var(--bg-muted)]  text-base shadow-lg focus:outline-none">
             {filteredList.length === 0 && query !== "" ? (
               <div className="relative cursor-default select-none py-2 px-4 text-[var(--white-muted)]">
                 Nothing found.
