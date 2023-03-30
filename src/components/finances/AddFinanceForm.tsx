@@ -84,6 +84,19 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
             onChange={(e) => updateFinance("name", e.target.value)}
           />
 
+          <DebitToCreditInput
+            value={{
+              debitor: finance.debitor,
+              creditor: finance.creditor,
+              amount: finance.amount,
+            }}
+            onChange={(value) => {
+              updateFinance("debitor", value.debitor);
+              updateFinance("creditor", value.creditor);
+              updateFinance("amount", value.amount);
+            }}
+          />
+
           <div className="flex gap-6">
             <DateInput
               title="When"
@@ -126,20 +139,7 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
             </AnimatePresence>
           </div>
 
-          <DebitToCreditInput
-            value={{
-              debitor: finance.debitor,
-              creditor: finance.creditor,
-              amount: finance.amount,
-            }}
-            onChange={(value) => {
-              updateFinance("debitor", value.debitor);
-              updateFinance("creditor", value.creditor);
-              updateFinance("amount", value.amount);
-            }}
-          />
-
-          <div className="flex gap-3 self-end mt-4">
+          <div className="flex gap-3 self-end">
             <p
               className="bg-[var(--bg-muted)] text-[var(--white)] text-lg font-medium px-4 py-2 rounded-lg border border-[var(--black-muted)] cursor-pointer"
               onClick={onClose}
