@@ -48,9 +48,11 @@ const DebitToCreditInput = ({ value, onChange }: DebitToCreditInputProps) => {
         />
       </div>
 
+      {/* TODO format input like currency */}
       <Input
         id="amount"
-        className="w-20"
+        className="w-24"
+        hideNumberInputArrows={true}
         title="Amount"
         type="number"
         min={0}

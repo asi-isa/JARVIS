@@ -45,3 +45,9 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+.hide-number-input-arrows::-webkit-outer-spin-button,
+.hide-number-input-arrows::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
