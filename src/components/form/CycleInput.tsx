@@ -31,7 +31,6 @@ const predefinedCycles: PredefinesCycle[] = [
   { name: "Daily", cycle: { cycle: "days", every: 1 } },
 ];
 
-// TODO design
 const CylcleInput = ({ value, onChange }: CylcleInputProps) => {
   const [cycle, setCycle] = useState<Cycle | undefined>(value);
 
@@ -60,6 +59,21 @@ const CylcleInput = ({ value, onChange }: CylcleInputProps) => {
     }
   }
 
+  function onCustomCycle() {
+    let every = isNaN(customCycle.every) ? 1 : customCycle.every;
+
+    // for the case 'every' was nan
+    setCustomCycle({
+      cycle: customCycle.cycle,
+      every,
+    });
+
+    setCycle({
+      cycle: customCycle.cycle,
+      every,
+    });
+  }
+
   return (
     <div className="flex flex-col gap-1 w-full">
       <p className="font-medium">Cycle</p>
@@ -83,19 +97,21 @@ const CylcleInput = ({ value, onChange }: CylcleInputProps) => {
               leaveTo="opacity-0 translate-y-1"
             >
               <Popover.Panel className="absolute bottom-[110%] z-20 ">
-                <div className=" rounded-lg shadow-xl border border-[var(--black-muted)]">
-                  <div className="relative grid grid-cols-2 gap-6 bg-[var(--bg)]  py-7 ">
+                <div className=" rounded-lg shadow-xl">
+                  <div className="relative grid grid-cols-2 bg-[var(--bg)]  ">
                     {predefinedCycles.map((item, i) => (
                       <Popover.Button
                         key={i}
                         onClick={() => setCycle(item.cycle)}
                       >
-                        <p>{item.name}</p>
+                        <p className="text-[var(--white)] font-medium border border-white/5 py-4">
+                          {item.name}
+                        </p>
                       </Popover.Button>
                     ))}
                   </div>
 
-                  <div className="flex gap-4 bg-[var(--bg-muted)] p-4">
+                  <div className="flex items-end gap-4 bg-[var(--bg-muted)] p-4">
                     <div className="flex flex-col gap-1">
                       <p className="font-medium">Cycle</p>
 
@@ -129,25 +145,10 @@ const CylcleInput = ({ value, onChange }: CylcleInputProps) => {
                       }}
                     />
 
-                    <Popover.Button
-                      onClick={() => {
-                        let every = isNaN(customCycle.every)
-                          ? 1
-                          : customCycle.every;
-
-                        // for the case 'every' was nan
-                        setCustomCycle({
-                          cycle: customCycle.cycle,
-                          every,
-                        });
-
-                        setCycle({
-                          cycle: customCycle.cycle,
-                          every,
-                        });
-                      }}
-                    >
-                      <p className="bg-[var(--accent)]">Custom</p>
+                    <Popover.Button onClick={onCustomCycle}>
+                      <p className="bg-[var(--accent)] text-[var(--bg)] font-medium rounded-md py-[11px] px-5">
+                        Custom
+                      </p>
                     </Popover.Button>
                   </div>
                 </div>
