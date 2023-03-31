@@ -8,6 +8,7 @@ export type ItemType = { id: number; name: string; value: string };
 interface AutocompleteDropdownProps {
   list: ItemType[];
   onChange: (item: ItemType) => void;
+  displayError: boolean;
   value?: ItemType;
   className?: string;
   showChevron?: boolean;
@@ -17,6 +18,7 @@ interface AutocompleteDropdownProps {
 const AutocompleteDropdown = ({
   list,
   onChange,
+  displayError,
   value,
   className,
   showChevron = true,
@@ -42,8 +44,9 @@ const AutocompleteDropdown = ({
     <Combobox value={selected} onChange={setSelected}>
       <div className="relative ">
         <div
-          className="relative w-full cursor-default overflow-hidden text-left shadow-md flex justify-between bg-[var(--bg-muted)] py-2 px-3 text-[var(--white)] font-medium text-lg rounded-lg border border-[var(--black-muted)] hover:border-[var(--white-muted)] focus:border-[var(--white-muted)] active:border-[var(--white-muted)]
-        "
+          className={`relative w-full cursor-default overflow-hidden text-left shadow-md flex justify-between bg-[var(--bg-muted)] py-2 px-3 text-[var(--white)] font-medium text-lg rounded-lg border border-[var(--black-muted)] hover:border-[var(--white-muted)] focus:border-[var(--white-muted)] active:border-[var(--white-muted)] ${
+            displayError && "ring ring-red-500"
+          }`}
         >
           <Combobox.Input
             className={`bg-inherit outline-none ${className}`}

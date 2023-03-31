@@ -13,9 +13,14 @@ type DebitToCreditType = {
 interface DebitToCreditInputProps {
   value: DebitToCreditType;
   onChange: (value: DebitToCreditType) => void;
+  displayErrors: { debitor: boolean; creditor: boolean; amount: boolean };
 }
 
-const DebitToCreditInput = ({ value, onChange }: DebitToCreditInputProps) => {
+const DebitToCreditInput = ({
+  value,
+  onChange,
+  displayErrors,
+}: DebitToCreditInputProps) => {
   const { balanceSheet } = useFinanceCtx();
   // TODO get from balance
   const accounts = balanceSheet.getAccountNames().map((accountName, i) => {
@@ -39,6 +44,7 @@ const DebitToCreditInput = ({ value, onChange }: DebitToCreditInputProps) => {
 
         <AutocompleteDropdown
           list={ACCOUNTS}
+          displayError={displayErrors.debitor}
           showChevron={false}
           value={ACCOUNTS.filter((a) => a.value === value.debitor)[0]}
           onChange={(item) => {
@@ -52,6 +58,7 @@ const DebitToCreditInput = ({ value, onChange }: DebitToCreditInputProps) => {
 
         <AutocompleteDropdown
           list={ACCOUNTS}
+          displayError={displayErrors.creditor}
           showChevron={false}
           value={ACCOUNTS.filter((a) => a.value === value.creditor)[0]}
           onChange={(item) => {
@@ -64,6 +71,7 @@ const DebitToCreditInput = ({ value, onChange }: DebitToCreditInputProps) => {
       <Input
         id="amount"
         className="w-24"
+        displayError={displayErrors.amount}
         hideNumberInputArrows={true}
         title="Amount"
         type="number"

@@ -1,5 +1,6 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
+import * as yup from "yup";
 import { IoClose } from "react-icons/io5";
 
 import { useFinanceCtx } from "../../ctx/FinanceCtx";
@@ -19,6 +20,10 @@ interface AddFinanceFormProps {
   onClose: () => void;
 }
 
+type TransactionErrorType = {
+  [key in keyof Transaction]: boolean;
+};
+
 const recurrentConVariants: Variants = {
   initial: { opacity: 0, height: 0 },
   animate: {
@@ -28,7 +33,7 @@ const recurrentConVariants: Variants = {
   exit: { opacity: 0, height: 0 },
 };
 
-const INITIAL_FINANCE = {
+const INITIAL_TX: Transaction = {
   name: "",
   category: "",
   date: new Date(),
@@ -41,12 +46,110 @@ const INITIAL_FINANCE = {
   id: generateID(),
 };
 
+const INITIAL_ERROR = {
+  name: false,
+  category: false,
+  date: false,
+  isRecurrent: false,
+  recurrentUntil: false,
+  recurringCycle: false,
+  amount: false,
+  creditor: false,
+  debitor: false,
+  id: false,
+};
+
+const txSchema = yup.object({
+  name: yup.string().required(),
+  category: yup.string().required(),
+  date: yup.date().required(),
+  isRecurrent: yup.boolean().required().isFalse(),
+  amount: yup.number().required(),
+  creditor: yup.string().required(),
+  debitor: yup.string().required(),
+  id: yup.string().required(),
+  recurrentUntil: yup.date(),
+  recurringCycle: yup.object(),
+});
+
+const recurrentTxSchema = yup.object({
+  name: yup.string().required(),
+  category: yup.string().required(),
+  date: yup.date().required(),
+  isRecurrent: yup.boolean().required().isTrue(),
+  amount: yup.number().required(),
+  creditor: yup.string().required(),
+  debitor: yup.string().required(),
+  id: yup.string().required(),
+  recurrentUntil: yup.date().required(),
+  recurringCycle: yup.object().required(),
+});
+
 const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
   const { debitToCredit } = useFinanceCtx();
 
-  const [finance, setFinance] = useState<Transaction>(INITIAL_FINANCE);
+  const [transaction, setTransaction] = useState<Transaction>(INITIAL_TX);
+  const [error, setError] = useState<TransactionErrorType>(INITIAL_ERROR);
 
-  console.log("finance", finance);
+  function onFormIsValid() {
+    // TODO recurrent functionality
+    // TODO add recurrentID to TransactionType
+    // calculate dates, change id, date, add to balance
+
+    debitToCredit(transaction);
+
+    // reset errors
+    setError(INITIAL_ERROR);
+    // reset form
+    setTransaction({ ...INITIAL_TX, id: generateID() });
+
+    onClose();
+  }
+
+  function onFormIsInvalid(e: { errors: string[] }) {
+    const newError: Partial<TransactionErrorType> = {};
+
+    e.errors.forEach((err: string) => {
+      const key = err.split(" ")[0] as keyof Transaction;
+      newError[key] = true;
+    });
+
+    // reset errors
+    setError(INITIAL_ERROR);
+
+    setError((currentError) => {
+      return { ...currentError, ...newError };
+    });
+  }
+
+  useEffect(() => {
+    checkFormInputs();
+  }, [transaction]);
+
+  function checkFormInputs() {
+    // only check form inputs (while typing) if there were previous errors
+    // ie after a 'rejected' form submit
+    const formContainsError = Object.values(error).some((e) => e);
+
+    if (formContainsError) {
+      const schema = transaction.isRecurrent ? recurrentTxSchema : txSchema;
+
+      schema
+        .validate(transaction, { abortEarly: false })
+        .catch(onFormIsInvalid);
+    }
+  }
+
+  function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const schema = transaction.isRecurrent ? recurrentTxSchema : txSchema;
+
+    schema
+      .validate(transaction, { abortEarly: false })
+      .then(onFormIsValid)
+      .catch(onFormIsInvalid);
+  }
 
   // function updateState<T>(
   //   key: keyof T,
@@ -57,25 +160,12 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
   //     return { ...currentState, [key]: value };
   //   });
   // }
-
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    // TODO check if form is filled properly
-
-    debitToCredit(finance);
-
-    // reset form
-    setFinance({ ...INITIAL_FINANCE, id: generateID() });
-
-    onClose();
-  }
-
-  function updateFinance<K extends keyof Transaction>(
+  function updateTransaction<K extends keyof Transaction>(
     key: K,
     value: Transaction[K]
   ) {
-    setFinance((currentFinance) => {
-      return { ...currentFinance, [key]: value };
+    setTransaction((currentTx) => {
+      return { ...currentTx, [key]: value };
     });
   }
 
@@ -94,46 +184,52 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
           <Input
             id="what"
             autofocus
+            displayError={error.name}
             title="Description"
             type="text"
-            value={finance.name}
-            onChange={(e) => updateFinance("name", e.target.value)}
+            value={transaction.name}
+            onChange={(e) => updateTransaction("name", e.target.value)}
           />
 
           <DebitToCreditInput
             value={{
-              debitor: finance.debitor,
-              creditor: finance.creditor,
-              amount: finance.amount,
+              debitor: transaction.debitor,
+              creditor: transaction.creditor,
+              amount: transaction.amount,
             }}
             onChange={(value) => {
-              updateFinance("debitor", value.debitor);
-              updateFinance("creditor", value.creditor);
-              updateFinance("amount", value.amount);
+              updateTransaction("debitor", value.debitor);
+              updateTransaction("creditor", value.creditor);
+              updateTransaction("amount", value.amount);
+            }}
+            displayErrors={{
+              creditor: error.creditor,
+              debitor: error.debitor,
+              amount: error.amount,
             }}
           />
 
           <div className="flex gap-6">
             <DateInput
               title="When"
-              onChange={(date) => updateFinance("date", date)}
+              onChange={(date) => updateTransaction("date", date)}
             />
 
             <CategoryInput
-              onChange={(item) => updateFinance("category", item.value)}
+              onChange={(item) => updateTransaction("category", item.value)}
             />
           </div>
 
           <ToggleInput
             title="Is It Recurrent"
-            isOn={finance.isRecurrent}
-            onChange={(isOn) => updateFinance("isRecurrent", isOn)}
+            isOn={transaction.isRecurrent}
+            onChange={(isOn) => updateTransaction("isRecurrent", isOn)}
           />
 
           {/* wrapped inside a div to avoid springy layout animation caused by the gap property */}
           <div className="">
             <AnimatePresence>
-              {finance.isRecurrent && (
+              {transaction.isRecurrent && (
                 <motion.div
                   variants={recurrentConVariants}
                   initial="initial"
@@ -143,12 +239,16 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
                 >
                   <DateInput
                     title="Recurrent Until"
-                    onChange={(date) => updateFinance("recurrentUntil", date)}
+                    onChange={(date) =>
+                      updateTransaction("recurrentUntil", date)
+                    }
                   />
 
                   <CylcleInput
-                    value={finance.recurringCycle}
-                    onChange={(cycle) => updateFinance("recurringCycle", cycle)}
+                    value={transaction.recurringCycle}
+                    onChange={(cycle) =>
+                      updateTransaction("recurringCycle", cycle)
+                    }
                   />
                 </motion.div>
               )}

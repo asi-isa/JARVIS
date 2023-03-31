@@ -6,6 +6,7 @@ interface InputProps {
   type: HTMLInputTypeAttribute;
   value: string;
   className?: string;
+  displayError: boolean;
   onChange: ChangeEventHandler<HTMLInputElement>;
   min?: React.InputHTMLAttributes<HTMLInputElement>["min"];
   hideNumberInputArrows?: boolean;
@@ -23,6 +24,7 @@ const Input = ({
   min,
   hideNumberInputArrows = false,
   autofocus = false,
+  displayError,
 }: InputProps) => {
   return (
     <div className={`flex flex-col gap-1 ${className}`}>
@@ -32,7 +34,7 @@ const Input = ({
       <input
         className={`bg-[var(--bg-muted)] py-2 px-3 text-[var(--white)] font-medium text-lg rounded-lg border border-[var(--black-muted)] hover:border-[var(--white-muted)] focus:border-[var(--white-muted)] active:border-[var(--white-muted)] ${
           hideNumberInputArrows && "hide-number-input-arrows"
-        }`}
+        } ${displayError && "ring ring-red-500"}`}
         type={type}
         id={id}
         name={id}

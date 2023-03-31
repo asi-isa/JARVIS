@@ -1,4 +1,5 @@
 import { useFinanceCtx } from "../../ctx/FinanceCtx";
+
 import FinanceListItem from "./FinanceListItem";
 
 interface FinanceListProps {}
@@ -6,7 +7,9 @@ interface FinanceListProps {}
 const FinanceList = ({}: FinanceListProps) => {
   const { balanceSheet } = useFinanceCtx();
 
-  // const transactions = filterAutomaticallyGeneratedEquityTransactions without losing privateinlage und so;
+  // TODO format losses red
+  // TODO give variable length properties a fixed container size and truncate on overflow, ie category and name
+  // TODO const transactions = filterAutomaticallyGeneratedEquityTransactions without losing privateinlage und so;
 
   return (
     <div className="flex flex-col gap-3">
