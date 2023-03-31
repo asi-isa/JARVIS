@@ -10,6 +10,7 @@ export default interface Transaction {
   isRecurrent: boolean;
   recurrentUntil: Date | undefined;
   recurringCycle: Cycle | undefined;
+  recurrentId: string | undefined;
   creditor: string;
   debitor: string;
   name: string;

@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
+import { add, compareDesc, startOfDay } from "date-fns";
 import * as yup from "yup";
 import { IoClose } from "react-icons/io5";
 
@@ -40,6 +41,7 @@ const INITIAL_TX: Transaction = {
   isRecurrent: false,
   recurrentUntil: undefined,
   recurringCycle: undefined,
+  recurrentId: undefined,
   amount: 0,
   creditor: "",
   debitor: "",
@@ -53,6 +55,7 @@ const INITIAL_ERROR = {
   isRecurrent: false,
   recurrentUntil: false,
   recurringCycle: false,
+  recurrentId: false,
   amount: false,
   creditor: false,
   debitor: false,
@@ -85,6 +88,7 @@ const recurrentTxSchema = yup.object({
   recurringCycle: yup.object().required(),
 });
 
+// TODO test, refactor
 const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
   const { debitToCredit } = useFinanceCtx();
 
@@ -93,11 +97,38 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
   const [error, setError] = useState<TransactionErrorType>(INITIAL_ERROR);
 
   function onFormIsValid() {
-    // TODO recurrent functionality
-    // TODO add recurrentID to TransactionType
-    // calculate dates, change id, date, add to balance
+    // TODO abstract addRecurrentTx(initTx)
+    if (transaction.isRecurrent) {
+      const recurrentId = generateID();
 
-    debitToCredit(transaction);
+      const recurrentTx = { ...transaction, recurrentId };
+      debitToCredit(recurrentTx);
+
+      const startDate = transaction.date;
+      const endDate = transaction.recurrentUntil!;
+      const { cycle, every } = transaction.recurringCycle!;
+
+      let nextDate = startOfDay(add(startDate, { [cycle]: every }));
+
+      // 1 if the first date is before the second
+      // 0 if equal
+      while (
+        compareDesc(nextDate, endDate) === 1 ||
+        compareDesc(nextDate, endDate) === 0
+      ) {
+        const nextTx: Transaction = {
+          ...recurrentTx,
+          date: nextDate,
+          id: generateID(),
+        };
+
+        debitToCredit(nextTx);
+
+        nextDate = startOfDay(add(nextDate, { [cycle]: every }));
+      }
+    } else {
+      debitToCredit(transaction);
+    }
 
     // reset errors
     setError(INITIAL_ERROR);
