@@ -10,6 +10,7 @@ import Input from "./Input";
 interface CylcleInputProps {
   value: Cycle | undefined;
   onChange: (cycle: Cycle) => void;
+  displayError: boolean;
 }
 
 type PredefinesCycle = {
@@ -31,7 +32,7 @@ const predefinedCycles: PredefinesCycle[] = [
   { name: "Daily", cycle: { cycle: "days", every: 1 } },
 ];
 
-const CylcleInput = ({ value, onChange }: CylcleInputProps) => {
+const CylcleInput = ({ value, onChange, displayError }: CylcleInputProps) => {
   const [cycle, setCycle] = useState<Cycle | undefined>(value);
 
   const [customCycle, setCustomCycle] = useState<Cycle>({
@@ -82,7 +83,9 @@ const CylcleInput = ({ value, onChange }: CylcleInputProps) => {
         {({ open }) => (
           <>
             <Popover.Button
-              className={`bg-[var(--bg-muted)] py-2 px-3 text-[var(--white)] font-medium text-lg rounded-lg border border-[var(--black-muted)] hover:border-[var(--white-muted)] focus:border-[var(--white-muted)] active:border-[var(--white-muted)] w-[268px] text-left`}
+              className={`bg-[var(--bg-muted)] py-2 px-3 text-[var(--white)] font-medium text-lg rounded-lg border border-[var(--black-muted)] hover:border-[var(--white-muted)] focus:border-[var(--white-muted)] active:border-[var(--white-muted)] w-[268px] text-left ${
+                displayError && "ring ring-red-500"
+              }`}
             >
               {cycle ? cycleToStr(cycle) : "Choose a Cycle"}
             </Popover.Button>
@@ -117,6 +120,7 @@ const CylcleInput = ({ value, onChange }: CylcleInputProps) => {
 
                       <AutocompleteDropdown
                         className="w-24"
+                        displayError={false}
                         list={cycles}
                         value={
                           cycles.filter((c) => c.value === customCycle.cycle)[0]
@@ -132,6 +136,7 @@ const CylcleInput = ({ value, onChange }: CylcleInputProps) => {
 
                     <Input
                       className="w-20"
+                      displayError={false}
                       id="every"
                       title="Every"
                       type="number"

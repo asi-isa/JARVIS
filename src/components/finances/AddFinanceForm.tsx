@@ -64,7 +64,7 @@ const txSchema = yup.object({
   category: yup.string().required(),
   date: yup.date().required(),
   isRecurrent: yup.boolean().required().isFalse(),
-  amount: yup.number().required(),
+  amount: yup.number().moreThan(0).required(),
   creditor: yup.string().required(),
   debitor: yup.string().required(),
   id: yup.string().required(),
@@ -77,7 +77,7 @@ const recurrentTxSchema = yup.object({
   category: yup.string().required(),
   date: yup.date().required(),
   isRecurrent: yup.boolean().required().isTrue(),
-  amount: yup.number().required(),
+  amount: yup.number().moreThan(0).required(),
   creditor: yup.string().required(),
   debitor: yup.string().required(),
   id: yup.string().required(),
@@ -89,6 +89,7 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
   const { debitToCredit } = useFinanceCtx();
 
   const [transaction, setTransaction] = useState<Transaction>(INITIAL_TX);
+
   const [error, setError] = useState<TransactionErrorType>(INITIAL_ERROR);
 
   function onFormIsValid() {
@@ -136,6 +137,7 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
 
       schema
         .validate(transaction, { abortEarly: false })
+        .then(() => setError(INITIAL_ERROR))
         .catch(onFormIsInvalid);
     }
   }
@@ -212,10 +214,12 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
           <div className="flex gap-6">
             <DateInput
               title="When"
+              displayError={error.date}
               onChange={(date) => updateTransaction("date", date)}
             />
 
             <CategoryInput
+              displayError={error.category}
               onChange={(item) => updateTransaction("category", item.value)}
             />
           </div>
@@ -239,6 +243,7 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
                 >
                   <DateInput
                     title="Recurrent Until"
+                    displayError={error.recurrentUntil}
                     onChange={(date) =>
                       updateTransaction("recurrentUntil", date)
                     }
@@ -246,6 +251,7 @@ const AddFinanceForm = ({ show, onClose }: AddFinanceFormProps) => {
 
                   <CylcleInput
                     value={transaction.recurringCycle}
+                    displayError={error.recurringCycle}
                     onChange={(cycle) =>
                       updateTransaction("recurringCycle", cycle)
                     }

@@ -2,9 +2,10 @@ import AutocompleteDropdown, { ItemType } from "./AutocompleteDropdown";
 
 interface CategoryInputProps {
   onChange: (item: ItemType) => void;
+  displayError: boolean;
 }
 
-const CategoryInput = ({ onChange }: CategoryInputProps) => {
+const CategoryInput = ({ onChange, displayError }: CategoryInputProps) => {
   // TODO get from balanceSheet
   // TODO infer value from debitor, creditor
 
@@ -17,7 +18,11 @@ const CategoryInput = ({ onChange }: CategoryInputProps) => {
   return (
     <div className="flex flex-col gap-1">
       <p className="font-medium">Category</p>
-      <AutocompleteDropdown list={CATEGORIES} onChange={onChange} />
+      <AutocompleteDropdown
+        displayError={displayError}
+        list={CATEGORIES}
+        onChange={onChange}
+      />
     </div>
   );
 };
