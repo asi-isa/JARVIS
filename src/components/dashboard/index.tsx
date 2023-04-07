@@ -2,6 +2,7 @@ import Menu from "./menu";
 
 import DashboardBody from "./DashboardBody";
 import FinanceDashboard from "../finances/FinanceDashboard";
+import ProjectsDashboard from "../projects/ProjectsDashboard";
 
 import { useDashboardCtx } from "../../ctx/DashboardCtx";
 
@@ -16,6 +17,7 @@ const Dashboard = ({}: DashboardProps) => {
 
       <DashboardBody isVisible={selectedDashboard === "dashboard"} />
       <FinanceDashboard isVisible={selectedDashboard === "finances"} />
+      <ProjectsDashboard isVisible={selectedDashboard === "projects"} />
     </div>
   );
 };

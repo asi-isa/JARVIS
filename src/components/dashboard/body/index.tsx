@@ -1,12 +1,14 @@
 import { ReactNode } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
-
 import { AiOutlineSearch } from "react-icons/ai";
 
 interface BodyProps {
   title: string;
   children: ReactNode;
   isVisible: boolean;
+  ctaTitle?: string;
+  onCTA?: () => void;
+  isSearchable?: boolean;
 }
 
 const variants: Variants = {
@@ -15,7 +17,14 @@ const variants: Variants = {
   exit: { opacity: 0, transition: { duration: 0.33 } },
 };
 
-const Body = ({ title, children, isVisible }: BodyProps) => {
+const Body = ({
+  title,
+  children,
+  isVisible,
+  ctaTitle,
+  onCTA,
+  isSearchable = false,
+}: BodyProps) => {
   return (
     <AnimatePresence mode="popLayout" initial={false}>
       {isVisible && (
@@ -29,16 +38,25 @@ const Body = ({ title, children, isVisible }: BodyProps) => {
         >
           {/* HEADER */}
           <div className="flex justify-between items-center">
-            <p className="text-2xl text-[var(--white)]">{title}</p>
+            <p className="text-2xl font-medium text-[var(--white)]">{title}</p>
 
-            <div className="flex items-center gap-2">
-              <AiOutlineSearch className="text-[var(--white)] text-xl" />
-              <p className="text-sm">Search Something...</p>
-            </div>
+            {isSearchable && (
+              <div className="flex items-center gap-2">
+                <AiOutlineSearch className="text-[var(--white)] text-xl" />
+                <p className="text-sm">Search Something...</p>
+              </div>
+            )}
 
-            <p className="font-semibold  text-[var(--black)] bg-[var(--accent)] py-2 px-4 rounded-xl">
-              Upgrade
-            </p>
+            {ctaTitle && (
+              <p
+                className="font-semibold  text-[var(--black)] bg-[var(--accent)] py-2 px-4 rounded-xl"
+                onClick={() => {
+                  onCTA && onCTA();
+                }}
+              >
+                {ctaTitle}
+              </p>
+            )}
           </div>
 
           <div className="overflow-y-scroll scrollbar-hide">{children}</div>

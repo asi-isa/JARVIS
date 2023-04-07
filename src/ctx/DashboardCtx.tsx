@@ -27,7 +27,7 @@ const DashboardCtx = createContext<DashboardCtxType>({
 
 export const DashboardCtxProvider = ({ children }: { children: ReactNode }) => {
   const [selectedDashboard, setSelectedDashboard] =
-    useState<DashboardName>("finances");
+    useState<DashboardName>("projects");
 
   return (
     <DashboardCtx.Provider value={{ selectedDashboard, setSelectedDashboard }}>
