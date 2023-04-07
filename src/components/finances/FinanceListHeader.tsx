@@ -10,6 +10,7 @@ const FinanceListHeader = ({ onAddFinanceFormBtn }: FinanceListHeaderProps) => {
     <div className="flex justify-end">
       <div className="flex items-center gap-3">
         {/* Filter */}
+        {/* TODO show past, future */}
         <BsFilterRight className="text-3xl text-[var(--white)] cursor-pointer" />
 
         {/* AddFinanceBtn */}
